@@ -1,0 +1,42 @@
+@model NewsPortal.Models.EnrichedPost
+
+@{
+    ViewData["Title"] = "Detalle de la Publicación";
+}
+
+<h2>@Model?.Post?.Title</h2>
+<p>@Model?.Post?.Body</p>
+
+<hr />
+
+<h4>Autor</h4>
+<p><strong>Nombre:</strong> @Model?.Author?.Name</p>
+<p><strong>Email:</strong> @Model?.Author?.Email</p>
+
+<hr />
+
+<h4>Comentarios (@Model?.Comments?.Count ?? 0)</h4>
+<ul>
+    @foreach (var comentario in Model?.Comments ?? new List<NewsPortal.Models.Comment>())
+    {
+        <li>
+            <strong>@comentario.Name</strong> – <em>@comentario.Email</em><br />
+            @comentario.Body
+        </li>
+    }
+</ul>
+
+<hr />
+
+<h4>Reacciones</h4>
+
+<form asp-action="Feedback" method="post">
+    <input type="hidden" name="postId" value="@Model?.Post?.Id ?? 0" />
+    <button type="submit" name="sentimiento" value="like" class="btn btn-success">👍 Me gustó</button>
+    <button type="submit" name="sentimiento" value="dislike" class="btn btn-danger">👎 No me gustó</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+}

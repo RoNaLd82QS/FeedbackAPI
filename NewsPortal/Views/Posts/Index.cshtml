@@ -1,0 +1,27 @@
+@model List<NewsPortal.Models.Post>
+
+@{
+    ViewData["Title"] = "Lista de Noticias";
+}
+
+<h2>Noticias Disponibles</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>@post.Title</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Ver detalle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
